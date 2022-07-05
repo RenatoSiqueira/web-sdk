@@ -1,0 +1,19 @@
+{
+  "name": "@geometerio/pogo",
+  "version": "1.0.19",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/geometerio/pogo.git"
+  },
+  "description": "",
+  "dependencies": {
+    "phoenix": "1.6.7"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

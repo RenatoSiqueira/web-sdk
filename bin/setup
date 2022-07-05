@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+set -e
+set -u
+set -o pipefail
+
+source "./bin/_support/cecho.sh"
+source "./bin/_support/step.sh"
+source "./bin/_support/check.sh"
+
+cecho --green "\n▸" --bright-bold-cyan "Running setup checks..."
+
+check "asdf: installed" \
+  "command -v asdf" \
+  "open 'https://asdf-vm.com/#/core-manage-asdf'"
+
+check "asdf: nodejs plugin installed" \
+  "asdf plugin-list | grep nodejs" \
+  "asdf plugin-add nodejs"
+
+check "asdf: tools are installed" \
+  "asdf which node > /dev/null" \
+  "asdf install"
+
+check "git: uses_ssh?" \
+  "git config -l | grep url.ssh://git@github.com/.insteadof=https://github.com/" \
+  "git config --global url.ssh://git@github.com/.insteadOf https://github.com/"
+
+check "direnv: installed" \
+  "command -v direnv" \
+  "brew install direnv && echo 'eval \"$(direnv hook bash)\"' >> ~/.bash_profile"
+
+check "direnv: .local/envrc file exists" \
+  "head .local/envrc" \
+  "touch .local/envrc"
+
+check "npm: installed" \
+  "which npm" \
+  "npm -g install npm"
+
+check "npm: packages installed" \
+  "npm list --dev" \
+  "npm install"
+
+check "systemwide .npmrc installed" \
+  "test -f ~/.npmrc" \
+  "cp .npmrc.sample $HOME/.npmrc"
+
+check "GitHub access token in .npmrc" \
+  "test $(cat ~/.npmrc | grep -c 'REPLACE ME') -eq 0" \
+  "systemwide ~/.npmrc file does not contain a valid GitHub Personal Access Token. Instructions are in ~/.npmrc"
+

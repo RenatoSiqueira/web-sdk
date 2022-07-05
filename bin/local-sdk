@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -e
+set -u
+set -o pipefail
+
+trap "exit" INT
+
+source "bin/_support/cecho.sh"
+
+npm link
+
+npm link @geometerio/pogo

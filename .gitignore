@@ -1,0 +1,17 @@
+._*
+.*.sw[a-z]
+.apdisk
+.AppleDB
+.AppleDesktop
+.AppleDouble
+.DS_Store
+.idea
+.LSOverride
+.Spotlight-V100
+.Trashes
+.vim
+.vscode/
+*.iml
+*.un~
+
+node_modules
