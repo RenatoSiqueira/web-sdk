@@ -7,5 +7,10 @@ trap "exit" INT
 
 source "bin/_support/cecho.sh"
 
-npm unlink --no-save @geometerio/pogo
+pushd $PROJECT
+npm unlink --no-save @vex-dev/typescript-sdk
+popd
+
+pushd $PROJECT/../demo/assets
 npm ci
+popd

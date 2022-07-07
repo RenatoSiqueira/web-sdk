@@ -7,6 +7,10 @@ trap "exit" INT
 
 source "bin/_support/cecho.sh"
 
+pushd $PROJECT
 npm link
+popd
 
-npm link @geometerio/pogo
+pushd $PROJECT/../demo
+npm link @vex-dev/typescript-sdk
+popd
