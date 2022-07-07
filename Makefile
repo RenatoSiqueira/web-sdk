@@ -1,3 +1,5 @@
+.PHONY: setup start test
+
 setup:
 	bin/setup
 
