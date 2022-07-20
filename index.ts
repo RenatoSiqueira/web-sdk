@@ -1,10 +1,10 @@
 import { Socket, Channel } from "phoenix";
-interface PogoConfig {
+interface VexConfig {
   url: string;
   onDisconnect: () => void;
 }
 
-interface PogoRoomConfig {
+interface VexRoomConfig {
   displayName: string;
   onPeerJoined?: (peer: Peer) => void;
   onPeerMedia?: (peer: Peer, event: MediaStream) => void;
@@ -18,7 +18,7 @@ interface PogoRoomConfig {
   onPeerWsMessage?: (message: any) => void;
 }
 
-interface PogoDevices {
+interface VexDevices {
   audioInputDevices: Array<MediaDeviceInfo>;
   videoInputDevices: Array<MediaDeviceInfo>;
   audioOutputDevices: Array<MediaDeviceInfo>;
@@ -33,17 +33,17 @@ export class Peer {
   audio: boolean;
 }
 
-export class Pogo {
+export class Vex {
   public url: string;
   private onDisconnect: () => void;
   private localStream: Promise<MediaStream>;
 
-  constructor(config: PogoConfig) {
+  constructor(config: VexConfig) {
     this.url = config.url;
     this.onDisconnect = config.onDisconnect;
   }
 
-  connect(): Promise<PogoConnection> {
+  connect(): Promise<VexConnection> {
     const socket = new Socket(this.url + "/socket", {});
 
     socket.onClose(() => this.onDisconnect());
@@ -53,7 +53,7 @@ export class Pogo {
     return new Promise((resolve, reject) => {
       socket.onError((error) => reject(error));
       socket.onOpen(() => {
-        const conn = new PogoConnection(this.url, socket);
+        const conn = new VexConnection(this.url, socket);
         resolve(conn);
       });
     });
@@ -64,7 +64,7 @@ export class Pogo {
     return this.localStream;
   }
 
-  async getDevices(): Promise<PogoDevices> {
+  async getDevices(): Promise<VexDevices> {
     const devices = await navigator.mediaDevices.enumerateDevices();
 
     let audioInputDevices: Array<MediaDeviceInfo> = [];
@@ -87,7 +87,7 @@ export class Pogo {
   }
 }
 
-class PogoConnection {
+class VexConnection {
   public url: string;
   private socket: Socket;
 
@@ -96,7 +96,7 @@ class PogoConnection {
     this.socket = socket;
   }
 
-  joinRoom(roomId: string, jwt: String, config: PogoRoomConfig): Promise<PogoRoom> {
+  joinRoom(roomId: string, jwt: String, config: VexRoomConfig): Promise<VexRoom> {
     const channel = this.socket.channel("room:" + roomId, { displayName: config.displayName, jwt: jwt });
 
     channel.onClose((event) => {
@@ -112,7 +112,7 @@ class PogoConnection {
         .join()
         .receive("ok", ({ peer, peersInRoom, participantCount, dataChannelsEnabled }) => {
           console.debug("joined");
-          resolve(new PogoRoom(this.url, roomId, channel, peer, peersInRoom, participantCount, dataChannelsEnabled, config));
+          resolve(new VexRoom(this.url, roomId, channel, peer, peersInRoom, participantCount, dataChannelsEnabled, config));
         })
         .receive("error", (resp) => {
           console.error("Unable to join room " + roomId, resp);
@@ -122,7 +122,7 @@ class PogoConnection {
   }
 }
 
-export class PogoRoom {
+export class VexRoom {
   public url: string;
   public roomId: string;
   private channel: Channel;
@@ -146,7 +146,7 @@ export class PogoRoom {
   private audioLevelsInterval: number;
   public audioLevelsCheckEvery: number = 100;
 
-  constructor(url: string, roomId: string, channel: Channel, peer: Peer, peersInRoom: Peer[], participantCount: number, dataChannelsEnabled: boolean, config: PogoRoomConfig) {
+  constructor(url: string, roomId: string, channel: Channel, peer: Peer, peersInRoom: Peer[], participantCount: number, dataChannelsEnabled: boolean, config: VexRoomConfig) {
     this.url = url;
     this.roomId = roomId;
     this.channel = channel;
