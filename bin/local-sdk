@@ -11,6 +11,6 @@ pushd $PROJECT
 npm link
 popd
 
-pushd $PROJECT/../demo
+pushd $PROJECT/../demo/assets
 npm link @vex-dev/typescript-sdk
 popd
