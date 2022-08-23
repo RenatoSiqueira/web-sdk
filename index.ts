@@ -276,6 +276,7 @@ export class VexRoom {
       video: {
         width: { ideal: window.screen.width, max: window.screen.width },
         height: { ideal: window.screen.height, max: window.screen.height },
+        frameRate: { ideal: 15 },
       },
     };
     const screenStream = await navigator.mediaDevices.getDisplayMedia(displayMediaStreamConstraints);
