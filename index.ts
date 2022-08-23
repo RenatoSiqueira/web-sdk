@@ -106,7 +106,7 @@ class VexConnection {
     channel.onError((error) => {
       console.error("Phoenix channel errored", error);
     });
-    
+
     return new Promise((resolve, reject) => {
       channel
         .join()
@@ -249,8 +249,12 @@ export class VexRoom {
     this.peerConnections[this.peer.id] = this.createRTCConnection(this.peer.id);
 
     for (const track of stream.getTracks()) {
+      if (track.kind == "video") {
+        track.contentHint = "detail";
+      }
       const sender = this.peerConnections[this.peer.id].addTrack(track, stream);
     }
+
     this.sendOfferFor(this.peerConnections[this.peer.id]);
   }
 
@@ -454,7 +458,7 @@ export class VexRoom {
         console.warn(peerId, "iceconnectionstatechange", event, pc.iceConnectionState, pc)
       }
     });
-    
+
     pc.addEventListener("negotiationneeded", (event) => { console.warn(peerId, "negotiationneeded", event, pc) });
 
     return pc;
