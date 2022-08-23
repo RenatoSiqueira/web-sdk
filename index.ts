@@ -252,7 +252,7 @@ export class VexRoom {
       if (track.kind == "video") {
         track.contentHint = "detail";
       }
-      const sender = this.peerConnections[this.peer.id].addTrack(track, stream);
+      this.peerConnections[this.peer.id].addTrack(track, stream);
     }
 
     this.sendOfferFor(this.peerConnections[this.peer.id]);
