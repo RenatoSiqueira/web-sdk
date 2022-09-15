@@ -1,4 +1,4 @@
-# vex-dev/typescript-sdk
+# vex-dev/web-sdk
 > Typescript/JavaScript SDK for working with the Vex API
 
 ## Setup
@@ -10,7 +10,7 @@ make setup
 ```
 
 ## Development
-When making changes to the typescript-sdk locally, you can link it to your application as follows:
+When making changes to the web-sdk locally, you can link it to your application as follows:
 
 ### Using the local sdk with demo
 
@@ -30,7 +30,7 @@ This repo currently has no tests.
 
 ## Deployment
 
-The typescript-sdk is automatically published to Github Packages when the version is changed in `package.json`
+The web-sdk is automatically published to Github Packages when the version is changed in `package.json`
 
 ## Contributing
 
