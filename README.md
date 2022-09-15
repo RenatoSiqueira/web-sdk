@@ -1,5 +1,5 @@
 # vex-dev/typescript-sdk
-> Typescript SDK for working with the Vex API
+> Typescript/JavaScript SDK for working with the Vex API
 
 ## Setup
 
@@ -10,8 +10,7 @@ make setup
 ```
 
 ## Development
-This repository is currently being used by vex-dev/demo only. 
-When making changes to the typescript-sdk locally, you can link it to your demo application.
+When making changes to the typescript-sdk locally, you can link it to your application as follows:
 
 ### Using the local sdk with demo
 
