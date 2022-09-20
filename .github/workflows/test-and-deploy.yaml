@@ -36,7 +36,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@vex.dev'
 
-      - run: npm ci
+      - name: Install depdendencies
+        shell: bash
+        run: npm ci
+
+      - name: Compile JS
+        shell: bash
+        run: npx tsc
 
       - name: Publish package on NPM 📦
         shell: bash
