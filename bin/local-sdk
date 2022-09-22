@@ -12,5 +12,5 @@ npm link
 popd
 
 pushd $PROJECT/../demo/assets
-npm link @vex-dev/web-sdk
+npm link @vex.dev/web-sdk
 popd

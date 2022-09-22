@@ -8,7 +8,7 @@ trap "exit" INT
 source "bin/_support/cecho.sh"
 
 pushd $PROJECT
-npm unlink --no-save @vex-dev/web-sdk
+npm unlink --no-save @vex.dev/web-sdk
 popd
 
 pushd $PROJECT/../demo/assets
