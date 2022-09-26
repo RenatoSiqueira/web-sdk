@@ -87,7 +87,7 @@ export class Vex {
   }
 }
 
-class VexConnection {
+export class VexConnection {
   public url: string;
   private socket: Socket;
 
