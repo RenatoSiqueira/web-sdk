@@ -2,3 +2,7 @@
 
 setup:
 	bin/setup
+
+build:
+	npx tsc
+	
