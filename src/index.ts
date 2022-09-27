@@ -6,16 +6,16 @@ interface VexConfig {
 
 interface VexRoomConfig {
   displayName: string;
-  onPeerJoined?: (peer: Peer) => void;
-  onPeerMedia?: (peer: Peer, event: MediaStream) => void;
-  onPeerServerRef?: (peerId: string, serverRef: string) => void;
-  onPeerLeft?: (peer: Peer) => void;
-  onPeerUpdated?: (peer: Peer) => void;
-  onPeerCountUpdated?: (count: number) => void;
-  onPeerAudioLevelChanged?: (peer: Peer, audioLevel: number) => void;
-  onPeerNativeMessage?: (peer: Peer, message: any) => void;
-  onPeerJsonMessage?: (peer: Peer, message: any) => void;
-  onPeerWsMessage?: (message: any) => void;
+  onPeerJoined?: (this: VexRoom, peer: Peer) => void;
+  onPeerMedia?: (this: VexRoom, peer: Peer, event: MediaStream) => void;
+  onPeerServerRef?: (this: VexRoom, peerId: string, serverRef: string) => void;
+  onPeerLeft?: (this: VexRoom, peer: Peer) => void;
+  onPeerUpdated?: (this: VexRoom, peer: Peer) => void;
+  onPeerCountUpdated?: (this: VexRoom, count: number) => void;
+  onPeerAudioLevelChanged?: (this: VexRoom, peer: Peer, audioLevel: number) => void;
+  onPeerNativeMessage?: (this: VexRoom, peer: Peer, message: any) => void;
+  onPeerJsonMessage?: (this: VexRoom, peer: Peer, message: any) => void;
+  onPeerWsMessage?: (this: VexRoom, message: any) => void;
 }
 
 interface VexDevices {
