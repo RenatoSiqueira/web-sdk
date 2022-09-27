@@ -8,7 +8,7 @@ interface VexRoomConfig {
   displayName: string;
   onPeerJoined?: (peer: Peer) => void;
   onPeerMedia?: (peer: Peer, event: MediaStream) => void;
-  onPeerServerRef?: (peerId: number, serverRef: string) => void;
+  onPeerServerRef?: (peerId: string, serverRef: string) => void;
   onPeerLeft?: (peer: Peer) => void;
   onPeerUpdated?: (peer: Peer) => void;
   onPeerCountUpdated?: (count: number) => void;
@@ -25,10 +25,10 @@ interface VexDevices {
 }
 
 export class Peer {
-  id: number;
+  id: string;
   displayName: string;
   active: boolean;
-  screenshareOwnerPeerId: number;
+  screenshareOwnerPeerId: string;
   video: boolean;
   audio: boolean;
 }
@@ -130,11 +130,11 @@ export class VexRoom {
   public dataChannelsEnabled: boolean;
   private dataWs: WebSocket;
   public peer: Peer;
-  public peersInRoom: { [peerId: number]: Peer } = {};
-  private peerConnections: { [peerId: number]: RTCPeerConnection } = {};
+  public peersInRoom: { [peerId: string]: Peer } = {};
+  private peerConnections: { [peerId: string]: RTCPeerConnection } = {};
   private onPeerJoined?: (peer: Peer) => void;
   private onPeerMedia?: (peer: Peer, stream: MediaStream) => void;
-  private onPeerServerRef?: (peerId: number, serverRef: string) => void;
+  private onPeerServerRef?: (peerId: string, serverRef: string) => void;
   private onPeerLeft?: (peer: Peer) => void;
   private onPeerUpdated?: (peer: Peer) => void;
   private onPeerCountUpdated?: (count: number) => void;
@@ -142,7 +142,7 @@ export class VexRoom {
   private onPeerNativeMessage?: (peer: Peer, message: any) => void;
   private onPeerJsonMessage?: (peer: Peer, message: any) => void;
   private onPeerWsMessage?: (message: any) => void;
-  private screensharePeerId: number = 9999999999;
+  private screensharePeerId: string = "725aacbb-cdca-4386-9de5-1cbb7d5964b5";
   private audioLevelsInterval: number;
   public audioLevelsCheckEvery: number = 100;
 
@@ -403,7 +403,7 @@ export class VexRoom {
     });
   }
 
-  private createRTCConnection(peerId: number, serverRef: string | undefined = undefined): RTCPeerConnection {
+  private createRTCConnection(peerId: string, serverRef: string | undefined = undefined): RTCPeerConnection {
     const pcConfig = {
       iceServers: [{ urls: "stun:secretariat.fly.dev:5000" }],
     };
@@ -495,7 +495,7 @@ export class VexRoom {
 
   private checkAudioLevels() {
     for (const [peerId, pc] of Object.entries(this.peerConnections)) {
-      if (Number(peerId) == this.screensharePeerId) {
+      if (peerId == this.screensharePeerId) {
         return;
       }
 
